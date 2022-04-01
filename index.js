@@ -1,5 +1,5 @@
 let div = document.getElementById('container')
-console.log(div)
+let arrivalTimeScrren = document.getElementById('arrival-times')
 const getAllStations = async() => {
     let req = await fetch('https://mtaapi.herokuapp.com/stations')
     let res = await req.json()
@@ -15,10 +15,19 @@ const getAllStations = async() => {
     })
 }
 
+const displayArrivalTimes = (arrivalTimes) => {
+    arrivalTimes.forEach((element) => {
+        let h4 = document.createElement('h4')
+        h4.innerText = element
+        arrivalTimeScrren.append(h4)
+    })
+}
+
 const getArrivalTime = async (stationId) => {
     let req = await fetch(`https://mtaapi.herokuapp.com/api?id=${stationId}`)
     let res = await req.json()
-    console.log("Arrival Time",res.result.arrivals)
+    console.log("Arrival Times",res.result.arrivals)
+    displayArrivalTimes(res.result.arrivals)
 }
 
 getAllStations()
